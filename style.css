@@ -1,0 +1,444 @@
+body {
+  background: radial-gradient(circle, #2c0a0a 0%, #000000 100%);
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Quicksand', sans-serif;
+}
+
+/* Yükselen Arka Plan Kalpleri */
+.floating-heart {
+  position: absolute;
+  background: #ff4d4d;
+  transform: rotate(-45deg);
+  opacity: 0.6;
+  pointer-events: none;
+  bottom: -50px;
+  animation: floatUp linear forwards;
+}
+
+.floating-heart::before, .floating-heart::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  border-radius: 50%;
+}
+.floating-heart::before { top: -50%; left: 0; }
+.floating-heart::after { left: 50%; top: 0; }
+
+@keyframes floatUp {
+  0% { transform: rotate(-45deg) translateY(0) scale(0.5); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: rotate(-45deg) translateY(-110vh) scale(1.2); opacity: 0; }
+}
+
+/* Zarf ve Mektup (Önceki düzeltmeler korundu) */
+.envlope-wrapper { position: relative; height: 250px; }
+#envelope {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  background-color: #b33939; 
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+  border-radius: 0 0 10px 10px;
+  z-index: 5;
+}
+
+.flap {
+  border-left: 150px solid transparent;
+  border-right: 150px solid transparent;
+  border-top: 110px solid #b33939;
+  transform-origin: top;
+  position: absolute;
+  z-index: 7;
+}
+
+.pocket {
+  border-left: 150px solid #e66767;
+  border-right: 150px solid #e66767;
+  border-bottom: 100px solid #d9534f;
+  border-top: 100px solid transparent;
+  position: absolute;
+  z-index: 6;
+  border-radius: 0 0 10px 10px;
+}
+
+.letter {
+  position: absolute;
+  background: #fff;
+  width: 90%;
+  left: 5%;
+  height: 90%;
+  top: 5%;
+  border-radius: 5px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+
+.words { 
+  color: #1a1a1a; 
+  font-family: 'Parisienne', cursive; 
+  text-align: center;
+}
+
+/* Modern & Havalı Butonlar */
+.reset {
+  margin-top: 120px;
+  z-index: 10;
+}
+
+.reset button {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ff9999;
+  padding: 12px 35px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin: 0 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.reset button:hover {
+  background: #ff4d4d;
+  color: white;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(255, 77, 77, 0.4);
+}
+
+/* Mektup ve Kalp Fırlama Efektleri */
+.open .flap { transform: rotateX(180deg); transition: 0.5s; z-index: 4; }
+.open .letter { transform: translateY(-130px); transition: 0.5s 0.6s; }
+.open .burst { opacity: 1; animation: burstOut 2s forwards; animation-delay: 0.5s; }
+
+@keyframes burstOut {
+  0% { transform: translate(0, 0) rotate(-45deg) scale(0); opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) rotate(var(--tr)) scale(1.2); opacity: 0; }
+}
+/* Burst yönlerini yukarıda zaten ayarlamıştık */
+.b1 { --tx: -120px; --ty: -220px; --tr: 20deg; }
+.b2 { --tx: 120px; --ty: -220px; --tr: -60deg; }
+.b3 { --tx: 0px; --ty: -280px; --tr: 10deg; }
+.b4 { --tx: -60px; --ty: -180px; --tr: 45deg; }
+.b5 { --tx: 60px; --ty: -180px; --tr: -30deg; }
+/* Yazı Boyutları ve Sığma Garantisi */
+.letter {
+  position: absolute;
+  background: #ffffff;
+  width: 90%;
+  left: 5%;
+  height: 115%; /* Kağıdı biraz daha uzattık */
+  top: 5%;
+  border-radius: 5px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  overflow: hidden;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.words { 
+  color: #1a1a1a; 
+  font-family: 'Parisienne', cursive; 
+  text-align: center;
+  line-height: 1.4; /* Satır aralığı ferahladı */
+}
+
+.line2 { font-size: 1.4rem; } 
+.line3 { font-size: 1.1rem; margin: 10px 0; }
+.line4 { font-size: 1.5rem; font-weight: bold; color: #b33939; }
+
+/* Modern Glassmorphism Kalpler */
+.floating-heart {
+  position: absolute;
+  /* Butonlar gibi yarı şeffaf ve soft renkler */
+  background: rgba(255, 153, 153, 0.4); 
+  backdrop-filter: blur(4px); /* Cam efekti */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transform: rotate(-45deg);
+  pointer-events: none;
+  bottom: -50px;
+  animation: floatUp linear forwards;
+  box-shadow: 0 0 15px rgba(255, 153, 153, 0.3); /* Soft parlaması */
+}
+
+.floating-heart::before, .floating-heart::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  border-radius: 50%;
+}
+.floating-heart::before { top: -50%; left: 0; }
+.floating-heart::after { left: 50%; top: 0; }
+
+@keyframes floatUp {
+  0% { transform: rotate(-45deg) translateY(0) scale(0.5); opacity: 0; }
+  15% { opacity: 0.8; }
+  85% { opacity: 0.8; }
+  100% { transform: rotate(-15deg) translateY(-110vh) scale(1.2); opacity: 0; }
+}
+
+/* Zarf Açılınca Mektubun Çıkış Mesafesi */
+.open .letter { transform: translateY(-160px); transition: 0.7s 0.6s; }
+/* Mektup Kağıdı - Kapalıyken zarfın arkasına tam gizlenmesi için */
+.letter {
+  position: absolute;
+  background: #ffffff;
+  width: 90%;
+  left: 5%;
+  height: 95%; /* Zarfın boyuna uygun */
+  top: 5%; /* Başlangıç pozisyonu zarfın içi */
+  border-radius: 5px;
+  z-index: 2; /* Pocket'ın (6) ve Flap'in (7) altında kalmalı */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  overflow: hidden;
+  padding: 15px;
+  box-sizing: border-box;
+  /* Kapanma animasyonu için buraya transition ekliyoruz */
+  transition: transform 0.6s ease-in-out, z-index 0.6s; 
+}
+
+/* Zarf Kapağı (Flap) - Kapanırken de dönmesi için */
+.flap {
+  position: absolute;
+  border-left: 150px solid transparent;
+  border-right: 150px solid transparent;
+  border-top: 110px solid #b33939;
+  transform-origin: top;
+  z-index: 7;
+  transition: transform 0.5s ease-in-out, z-index 0.3s 0.3s;
+}
+
+/* Açık Durum Animasyonları */
+.open .flap { 
+  transform: rotateX(180deg); 
+  z-index: 1; /* Açılınca mektubun arkasına geçer */
+  transition: transform 0.5s ease-in-out, z-index 0.3s;
+}
+
+.open .letter { 
+  transform: translateY(-130px); /* Yukarı çıkış */
+  z-index: 5; /* Zarf kapağının üstüne çıkar */
+  transition: transform 0.6s 0.4s ease-in-out, z-index 0.6s;
+}
+
+/* Kapalı Durum (Reset) - Mektup içeri geri girer */
+.close .letter {
+  transform: translateY(0);
+  z-index: 2;
+  transition: transform 0.5s ease-in-out, z-index 1s;
+}
+
+.close .flap {
+  transform: rotateX(0deg);
+  z-index: 7;
+  transition: transform 0.5s 0.5s ease-in-out, z-index 0.5s;
+}
+/* Mektubun çıkış mesafesini artırdık */
+.open .letter { 
+  transform: translateY(-165px) rotate(-2deg); /* Hem daha yukarı çıkıyor hem hafif romantik bir eğim alıyor */
+  z-index: 5; 
+  transition: transform 0.6s 0.4s ease-in-out, z-index 0.6s;
+}
+
+/* Kağıdın kendisini biraz daha uzun yapalım ki yazı sığsın */
+.letter {
+  position: absolute;
+  background: #ffffff;
+  width: 90%;
+  left: 5%;
+  height: 100%; /* Boyunu tam yaptık */
+  top: 5%;
+  border-radius: 5px;
+  z-index: 2; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Yazıları en üste değil, içeriğe göre hizalar */
+  padding: 20px 10px; /* Üstten biraz daha fazla boşluk */
+  box-sizing: border-box;
+  transition: transform 0.6s ease-in-out, z-index 0.6s;
+}
+
+.letter-content {
+  margin-top: 10px; /* Yazıları kağıdın içinde biraz aşağı kaydırarak ortalıyoruz */
+}
+
+/* Yazı boyutlarını kağıda tam sığacak şekilde optimize ettik */
+.line2 { font-size: 1.3rem; margin-bottom: 10px; } 
+.line3 { font-size: 1.0rem; margin-bottom: 10px; }
+.line4 { font-size: 1.4rem; font-weight: bold; color: #b33939; }
+
+/* Kapatma Animasyonu Garantisi */
+.close .letter {
+  transform: translateY(0);
+  z-index: 2;
+  transition: transform 0.5s ease-in-out;
+}
+
+.close .flap {
+  transform: rotateX(0deg);
+  z-index: 7;
+  transition: transform 0.5s 0.5s ease-in-out;
+}
+document.addEventListener("DOMContentLoaded", function() {
+  const envelope = document.getElementById("envelope");
+  const btn_open = document.getElementById("open");
+  const btn_reset = document.getElementById("reset");
+
+  function openEnv() {
+    envelope.classList.add("open");
+    envelope.classList.remove("close");
+  }
+
+  function closeEnv() {
+    envelope.classList.add("close");
+    envelope.classList.remove("open");
+  }
+
+  envelope.addEventListener("click", openEnv);
+  btn_open.addEventListener("click", openEnv);
+  btn_reset.addEventListener("click", (e) => {
+    e.stopPropagation(); 
+    closeEnv();
+  });
+});
+/* Ana kapsayıcıyı rahat bırakalım ki animasyon kısıtlanmasın */
+.envlope-wrapper {
+  position: relative;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#envelope {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  background-color: #b33939; 
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+  border-radius: 0 0 10px 10px;
+  z-index: 5;
+  
+  /* BU KISIM ÖNEMLİ: Zarfın altından taşan beyazlığı keser ama üstten çıkışı engellemez */
+  clip-path: inset(-300px 0px 0px 0px); 
+}
+
+/* Mektup Kağıdı ve O Güzel Animasyon */
+.letter {
+  position: absolute;
+  background: #ffffff;
+  width: 90%;
+  left: 5%;
+  height: 100%; 
+  top: 5%;
+  border-radius: 5px;
+  z-index: 2; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Hem yukarı çıkış hem de o istediğin hafif sola yatış animasyonu buraya geri geldi */
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), z-index 0.6s;
+}
+
+/* Kapalıyken: Tamamen zarfın içinde ve düz */
+.close .letter {
+  transform: translateY(0) rotate(0deg);
+  z-index: 2;
+}
+
+/* Açıkken: Hem yukarı çıkıyor hem de hafif sola yatıyor */
+.open .letter { 
+  transform: translateY(-170px) rotate(-4deg); /* İşte o meşhur sola yatış */
+  z-index: 5; 
+}
+
+/* Zarf kapağının animasyonu */
+.flap {
+  /* ... diğer özellikler aynı ... */
+  transition: transform 0.5s ease-in-out;
+}
+/* Mektup Kağıdı - Temel Ayarlar */
+.letter {
+  position: absolute;
+  background: #ffffff;
+  width: 90%;
+  left: 5%;
+  height: 100%;
+  top: 5%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Kapanışta kağıdı anında arkaya atmak için geçiş efekti */
+  transition: transform 0.6s ease-in-out, z-index 0s 0.6s; 
+  z-index: 2; /* Kapalıyken en altta */
+}
+
+/* AÇIK DURUM */
+.open .letter { 
+  transform: translateY(-170px) rotate(-4deg); 
+  z-index: 5; /* Zarfın üstüne çıkar */
+  transition: transform 0.6s 0.4s ease-in-out, z-index 0s 0.4s;
+}
+
+.open .flap { 
+  transform: rotateX(180deg); 
+  z-index: 1; /* Kapak açılınca arkaya geçer */
+  transition: transform 0.5s ease-in-out, z-index 0s 0.5s;
+}
+
+/* KAPALI DURUM (Sening "bozuluyor" dediğin kısım burası) */
+.close .letter {
+  transform: translateY(0) rotate(0deg);
+  z-index: 2; /* İçeri girerken anında cebin arkasına geçer */
+  /* Kağıt içeri girerken z-index gecikmesini kaldırıyoruz */
+  transition: transform 0.6s ease-in-out, z-index 0s; 
+}
+
+.close .flap {
+  transform: rotateX(0deg);
+  z-index: 7; /* Kapak kapanırken en üstte olmalı */
+  /* Kağıt içeri girdikten sonra kapağın kapanması için gecikme ekledik */
+  transition: transform 0.5s 0.5s ease-in-out, z-index 0s 0.5s;
+}
+
+/* Zarfın Ön Cebini (Pocket) sağlama alalım */
+.pocket {
+  border-left: 150px solid #e66767;
+  border-right: 150px solid #e66767;
+  border-bottom: 100px solid #d9534f;
+  border-top: 100px solid transparent;
+  position: absolute;
+  z-index: 6; /* Mektup kapalıyken (2) bunun arkasında kalır */
+  border-radius: 0 0 10px 10px;
+}
